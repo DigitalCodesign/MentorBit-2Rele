@@ -38,22 +38,20 @@
 #define MentorBit2Rele_h
 
 #include <arduino.h>
+#include <MentorPort.h>
 
-
-class MentorBit2Rele
+class MentorBit2Rele : public MentorPort
 {
     public: 
 
         MentorBit2Rele(uint8_t pin_rele1, uint8_t pin_rele2);
         void activarRele(bool rele);
         void desactivarRele(bool rele);
-        const bool RELE_1 = 1;
-        const bool RELE_2 = 0;
+        void configPort(const Port& port) override;
 
     private:
 
-        uint8_t _rele_1_pin;
-        uint8_t _rele_2_pin;
+        Port _port;
 
 };
 

@@ -39,33 +39,47 @@
 /*  
     Constructor, se debe indicar el pin al cual se esta conectando el modulo rele
 */
-MentorBit2Rele::MentorBit2Rele(uint8_t pin_rele1, uint8_t pin_rele2){
-    _rele_1_pin = pin_rele1;
-    _rele_2_pin = pin_rele2;
-    pinMode(_rele_1_pin,OUTPUT);
-    pinMode(_rele_2_pin,OUTPUT);
+MentorBit2Rele::MentorBit2Rele(uint8_t pin_rele1 = 0, uint8_t pin_rele2 = 0) {
+    _port.gpios[0] = pin_rele1;
+    _port.gpios[1] = pin_rele2;
+    if(pin_rele1 && pin_rele2) {
+        pinMode(_port.gpios[0],OUTPUT);
+        pinMode(_port.gpios[1],OUTPUT);
+    }
 }
 
 /*
     Funcion que permite activar la bobina del rele
 */
-void MentorBit2Rele::activarRele(bool rele){
+void MentorBit2Rele::activarRele(bool rele) {
     if(rele){
-        digitalWrite(_rele_1_pin,HIGH);
+        digitalWrite(_port.gpios[0],HIGH);
     }
     else{
-        digitalWrite(_rele_2_pin,HIGH);
+        digitalWrite(_port.gpios[1],HIGH);
     }
 }
 
 /*
     Funcion que permite desactivar la bobina del rele
 */
-void MentorBit2Rele::desactivarRele(bool rele){
+void MentorBit2Rele::desactivarRele(bool rele) {
     if(rele){
-        digitalWrite(_rele_1_pin,LOW);
+        digitalWrite(_port.gpios[0],LOW);
     }
     else{
-        digitalWrite(_rele_2_pin,LOW);
+        digitalWrite(_port.gpios[1],LOW);
     }
+}
+
+void MentorBit2Rele::configPort(const Port& port) {
+
+    _port.type = port.type;
+    _port.location = port.location;
+    _port.gpios[0] = port.gpios[0];
+    _port.gpios[1] = port.gpios[1];
+
+    pinMode(_port.gpios[0],OUTPUT);
+    pinMode(_port.gpios[1],OUTPUT);
+
 }
