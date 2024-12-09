@@ -44,7 +44,7 @@ class MentorBit2Rele : public MentorPort
 {
     public: 
 
-        MentorBit2Rele(uint8_t pin_rele1, uint8_t pin_rele2);
+        MentorBit2Rele(uint8_t pin_rele1 = 0, uint8_t pin_rele2 = 0);
         void activarRele(bool rele);
         void desactivarRele(bool rele);
         void configPort(const Port& port) override;
