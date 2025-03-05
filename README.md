@@ -1,73 +1,51 @@
+# MentorBit2Rele
 
-
-# MentorBit 2 Rele
+Librería para el control de módulos de dos relés compatibles con MentorBit.
 
 ## Descripción
 
-Esta librería está específicamente diseñada para ser utilizada junto con el módulo **MentorBit Rele de dos canales**.
-
-El módulo **MentorBit Rele de dos canales** permite controlar dos relés independientemente. Puedes activar o desactivar cada relé según sea necesario utilizando los métodos proporcionados.
+La librería `MentorBit2Rele` permite controlar módulos de dos relés compatibles con MentorBit. Facilita la activación y desactivación individual de cada relé, ideal para proyectos que requieren el control de múltiples dispositivos.
 
 ## Modo de Empleo
 
-Una vez que tengas la librería instalada desde el Arduino IDE, inclúyela en tu proyecto con la siguiente línea:
+1.  **Instalación:**
+    * Abre el IDE compatible con MentorBit.
+    * Ve a "Herramientas" -> "Gestionar librerías..."
+    * Busca "MentorBit2Rele" e instálala.
 
-```cpp
-#include <MentorBit2Rele.h>
-```
+2.  **Ejemplo básico:**
+
+    ```c++
+    #include <MentorBit2Rele.h>
+
+    MentorBit2Rele rele(2, 3); // Inicializa los relés en los pines 2 y 3
+
+    void setup() {
+      rele.activarRele(true);  // Activa el relé 1 (pin 2)
+      delay(2000);
+      rele.desactivarRele(true); // Desactiva el relé 1
+      delay(1000);
+      rele.activarRele(false); // Activa el relé 2 (pin 3)
+      delay(2000);
+      rele.desactivarRele(false); // Desactiva el relé 2
+    }
+
+    void loop() {
+      // Los relés se activan y desactivan secuencialmente una vez en el setup.
+    }
+    ```
+
+## Constructor y Métodos Públicos
 
 ### Constructor
 
-Una vez incluida la librería, usamos el constructor para crear el objeto del módulo de relé de dos canales, y definir los pines a los que están conectados los dos relés:
+* `MentorBit2Rele(uint8_t pin_rele1 = 0, uint8_t pin_rele2 = 0)`: Crea un objeto `MentorBit2Rele`.
+    * `pin_rele1`: Número de pin al que está conectado el primer relé. Si no se especifica, se asume que no está conectado a ningún pin inicialmente.
+    * `pin_rele2`: Número de pin al que está conectado el segundo relé. Si no se especifica, se asume que no está conectado a ningún pin inicialmente.
 
-```cpp
-MentorBit2Rele rele(PIN_RELE1, PIN_RELE2);
-```
+### Métodos
 
-Donde `PIN_RELE1` es el pin al que está conectado el primer relé y `PIN_RELE2` es el pin al que está conectado el segundo relé.
-
-### Métodos Principales
-
-#### `activarRele(bool rele)`
-
-Activa la bobina del relé seleccionado:
-
-- `rele == true` → Activa el primer relé.
-- `rele == false` → Activa el segundo relé.
-
-```cpp
-rele.activarRele(true);  // Activa el primer relé
-rele.activarRele(false); // Activa el segundo relé
-```
-
-#### `desactivarRele(bool rele)`
-
-Desactiva la bobina del relé seleccionado:
-
-- `rele == true` → Desactiva el primer relé.
-- `rele == false` → Desactiva el segundo relé.
-
-```cpp
-rele.desactivarRele(true);  // Desactiva el primer relé
-rele.desactivarRele(false); // Desactiva el segundo relé
-```
-
-#### `configPort(const Port& port)`
-
-Configura los puertos y pines de los relés. Se pueden especificar los pines para ambos relés.
-
-```cpp
-Port port;
-port.gpios[0] = 7;  // Pin del primer relé
-port.gpios[1] = 8;  // Pin del segundo relé
-rele.configPort(port);
-```
-
-##### Parámetros
-
-- `port`: Estructura que contiene la configuración del puerto, tipo, ubicación y pines de los relés.
-
-## Atributos
-
-- `RELE_1` → Selecciona el primer relé.
-- `RELE_2` → Selecciona el segundo relé.
+* `void activarRele(bool rele)`: Activa el relé especificado.
+    * `rele`: `true` para activar el primer relé, `false` para el segundo.
+* `void desactivarRele(bool rele)`: Desactiva el relé especificado.
+    * `rele`: `true` para desactivar el primer relé, `false` para el segundo.
